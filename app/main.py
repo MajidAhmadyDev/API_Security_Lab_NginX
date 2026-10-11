@@ -57,6 +57,14 @@ class PredictIn(BaseModel):
 def predict(payload: PredictIn, user: str = Depends(get_current_user)):
     return {"score": calculate_text_score(payload.text)}
 
-@app.get("/me")
+
+class UserPublic(BaseModel):
+    id: int
+    name: str
+
+
+@app.get("/me", response_model=UserPublic)
 def me(user: str = Depends(get_current_user)):
     return USERS[user]
+
+
