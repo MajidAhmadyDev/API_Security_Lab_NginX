@@ -9,4 +9,3 @@ dependencies = [
 [dependency-groups]
 # the attacker's machine: the euporie notebook
 attack = ["requests", "ipykernel", "euporie", "numpy", "safetensors"]
-EOF

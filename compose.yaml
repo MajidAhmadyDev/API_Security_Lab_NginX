@@ -1,0 +1,21 @@
+services:
+  api:
+    build: .
+    command: [".venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0",
+              "--port", "8000", "--reload", "--reload-dir", "app"]
+    volumes:
+      - ./app:/app/app                    # your edits reach the container live
+    expose:
+      - "8000"                            # reachable by the gateway only
+
+  gateway:
+    image: nginx:1.28
+    ports:
+      - "8080:80"                         # the only port open to clients
+    volumes:
+      - ./gateway:/etc/nginx/conf.d:ro    # the folder, not the single file
+    depends_on:
+      - api
+
+
+      
