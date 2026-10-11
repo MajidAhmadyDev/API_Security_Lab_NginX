@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -51,7 +51,7 @@ def calculate_text_score(text: str) -> float:
     return sum(ord(character) for character in text) / (len(text) + 1)
 
 class PredictIn(BaseModel):
-    text: str
+    text: str# = Field(max_length=512)
 
 @app.post("/predict")
 def predict(payload: PredictIn, user: str = Depends(get_current_user)):
